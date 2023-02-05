@@ -1,0 +1,8 @@
+{
+    "name" : "wf/pdv",
+    "autoload": {
+        "psr-4": {
+            "App\\" : "app/"
+        }
+    }
+}

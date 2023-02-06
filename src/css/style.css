@@ -134,7 +134,7 @@ td {
     padding: 10px;
 }
 
-#quantidade {
+.quantidade {
     width: 95%;
     border-radius: 10px;
     border: 1px solid #dfdfdf;
@@ -156,6 +156,10 @@ td {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.disabled{
+    background-color: #AAA
 }
 
 .header-ingressos {

@@ -35,8 +35,6 @@ class Eventos{
             $return = curl_exec($curl);
             curl_close($curl);
             $resposta = json_decode($return, true); 
-
-            
             return $resposta;
       }
 

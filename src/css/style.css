@@ -142,6 +142,25 @@ td {
     color: #979797;
 }
 
+#lista {
+    margin-top: 5%;
+    margin-bottom: 3%;
+  }
+
+.itens {
+    display: flex;
+    width: 100%;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.itens p{
+    width: 50%;
+    font-size: 14px;
+    font-weight: 700;
+}
+
 #adicionar {
     font-size: 16px;
     height: 35px;
@@ -158,7 +177,7 @@ td {
     justify-content: space-between;
 }
 
-.disabled{
+.disabled {
     background-color: #AAA
 }
 
@@ -355,7 +374,7 @@ h2 {
     font-size: 26px;
 }
 
-h5{
+h5 {
     font-size: 1.1rem;
 }
 

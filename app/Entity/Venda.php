@@ -17,6 +17,11 @@ class Venda{
     public $ingresso_id;
 
     /**
+     * Pega o nome do ingresso
+     */
+    public $nome_ingresso;
+
+    /**
      * Pega a quantidade vendida
      */
     public $quantidade;
@@ -41,6 +46,7 @@ class Venda{
         $obVenda = new Database("vendas");
         $this->id = $obVenda->insert([
             'ingresso_id' => $this->ingresso_id,
+            'nome_ingresso'  => $this->nome_ingresso,
             'quantidade'  => $this->quantidade,
             'valor_un'    => $this->valor,
             'vlr_total'   => $this->valor_total,
@@ -48,15 +54,33 @@ class Venda{
             'operador_id' => '1',
         ]);
 
-        echo "<pre>";
-        echo $this->id;
-        echo "<pre>";
-        die;
-
         return;
 
     }
 
-}
+    static public function buscaVendaAberta(){
+        return(new Database('vendas'))->select("status = 'aberto'")
+                                        ->fetchAll(PDO::FETCH_CLASS,self::class);
+    }
 
-?>
+    /**
+     * Soma  total de ingressos vendidos em quantidade
+     */
+    static public function getTotalIngressos()
+    {
+        $aberto = "'aberto'";
+        return (new Database('vendas'))->selectSum('status = ' . $aberto, 'quantidade')
+            ->fetchColumn();
+    }
+
+    /**
+     * Soma  total de ingressos vendidos em valor
+     */
+    static public function getTotal()
+    {
+        $aberto = "'aberto'";
+        return (new Database('vendas'))->selectSum('status = ' . $aberto, 'vlr_total')
+            ->fetchColumn();
+    }
+
+}

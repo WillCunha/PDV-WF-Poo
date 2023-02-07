@@ -11,7 +11,7 @@ foreach ($ingressos['dados'] as $retorno) {
                 <h5>ESGOTADO!</h5>
             </div>
             <p style='font-weight: 600;color: #c00;'>Quantidade disponível: " . $retorno['quantidade'] . "</p>
-            <input type='number' name='id". $retorno['id'] ."' id='id". $retorno['id'] ."' value='". $retorno['id'] ."' onkeypress='inpNum(event)' hidden>
+            <input type='number' name='id" . $retorno['id'] . "' id='id" . $retorno['id'] . "' value='" . $retorno['id'] . "' onkeypress='inpNum(event)' hidden>
             <input type='number' name='quantidade' class='quantidade' id='quantidade' value='1' onkeypress='inpNum(event)'>
             <button type='submit' class='disabled' id='adicionar'>Adicionar</button>
         </div>
@@ -24,21 +24,23 @@ foreach ($ingressos['dados'] as $retorno) {
                             <h5>R$ " . $retorno['valor'] . "</h5>
                         </div>
                         <p style='font-weight: 600;'>Quantidade disponível: " . $retorno['quantidade'] . "</p>
-                        <form action='envia-compra.php' method='post' id='envia-compra". $retorno['id'] ."'>
-                            <input type='number' name='id' id='id". $retorno['id'] ."' value='". $retorno['id'] ."' onkeypress='inpNum(event)' hidden>
-                            <input type='number' name='valor' id='valor". $retorno['id'] ."' value='". $retorno['valor'] ."' onkeypress='inpNum(event)' hidden>
-                            <input type='number' name='quantidade' class='quantidade' id='quantidade". $retorno['id'] ."' value='1' onkeypress='inpNum(event)'>
+                        <form action='envia-compra.php' method='post' id='envia-compra" . $retorno['id'] . "'>
+                            <input type='number' name='id' id='id" . $retorno['id'] . "' value='" . $retorno['id'] . "' onkeypress='inpNum(event)' hidden>
+                            <input type='text' name='nome_ingresso' id='nome_ingresso" . $retorno['id'] . "' value='" . $retorno['nome_ingresso'] . "' onkeypress='inpNum(event)' hidden>
+                            <input type='number' name='valor' id='valor" . $retorno['id'] . "' value='" . $retorno['valor'] . "' onkeypress='inpNum(event)' hidden>
+                            <input type='number' name='quantidade' class='quantidade' id='quantidade" . $retorno['id'] . "' value='1' onkeypress='inpNum(event)'>
                             <button type='submit' id='adicionar'>Adicionar</button>
                         </form>
                     </div>
                 </div>
                 <script>
-                $('#envia-compra". $retorno['id'] ."').submit(function(e) {
+                $('#envia-compra" . $retorno['id'] . "').submit(function(e) {
                     e.preventDefault();
                     var formData = {
-                        id: $('#id". $retorno['id'] ."').val(),
-                        quantidade: $('#quantidade". $retorno['id'] ."').val(),
-                        valor: $('#valor". $retorno['id'] ."').val()
+                        id: $('#id" . $retorno['id'] . "').val(),
+                        nome_ingresso: $('#nome_ingresso" . $retorno['id'] . "').val(),
+                        quantidade: $('#quantidade" . $retorno['id'] . "').val(),
+                        valor: $('#valor" . $retorno['id'] . "').val()
                     };
                     console.log(formData);
                     $.ajax({
@@ -72,24 +74,17 @@ foreach ($ingressos['dados'] as $retorno) {
                     <h4>FINALIZADORA:</h4>
                     <p></p>
                     <h1 style="text-align: center; font-size: 3.5rem;"></h1>
-                    <hr>
-                    <div class="contadores-eventos">
-                        <div class="titulos-contadores">
-                            <b>VALOR TOTAL: </b>
-                            <b>QUANTIDADE DE INGRESSOS: </b>
-                            <b class="total">Total de ingressos: </b>
-                        </div>
-                        <div class="numeros-contadores">
-                            <b>0</b>
-                            <b>0</b>
-                            <b class="total"></b>
-                        </div>
+                    <div id="lista">
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <script>
+
+        setInterval(capturaVendasAberta, 500);
+        jQuery('.disabled').prop('disabled', true);
+
         function inpNum(e) {
             e = e || window.event;
             var charCode = (typeof e.which == "undefined") ? e.keyCode : e.which;
@@ -97,5 +92,16 @@ foreach ($ingressos['dados'] as $retorno) {
             if (!charStr.match(/^[0-9]+$/))
                 e.preventDefault();
         }
-        jQuery('.disabled').prop('disabled', true);
+
+        function capturaVendasAberta() {
+            $.ajax({
+                type: "GET",
+                url: "venda-aberta.php",
+                dataType: "html",
+                success(response) {
+                    console.log(response)
+                    $("#lista").html(response);
+                }
+            })
+        }
     </script>

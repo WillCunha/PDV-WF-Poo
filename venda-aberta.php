@@ -18,12 +18,16 @@ foreach($vendaAberta as $venda){
         echo "<hr>";
         echo "<div class='contadores-eventos'>";
         echo "<div class='titulos-contadores'>";
-        echo "<b >QUANTIDADE DE INGRESSOS: </b>";
-        echo "<b class='total'>VALOR TOTAL: </b>";
+        echo "<b style='font-size: 14px';>QUANTIDADE DE INGRESSOS: </b>";
+        echo "<b class='total'>SUBTOTAL: </b>";
+        echo "<b class='total'>A RECEBER: </b>";
+        echo "<b class='total'>TROCO: </b>";
         echo "</div>";
         echo "<div class='numeros-contadores'>";
-        echo "<P >".$somaQuantidade."</P>";
+        echo "<P >".sprintf("%02d", $somaQuantidade)."</P>";
         echo "<p class='total'>R$ ".number_format($somaVenda,2,",",".")."</p>";
+        echo "<p class='total'>R$ ".number_format("0",2,",",".")."</p>";
+        echo "<p class='total'>R$ ".number_format("0",2,",",".")."</p>";
         echo "</div>";
         echo "</div>";
     }

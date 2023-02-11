@@ -22,6 +22,9 @@ body {
 .navbar {
     -webkit-box-shadow: -5px 6px 20px -3px rgba(0, 0, 0, 0.5);
     box-shadow: -5px 6px 20px -3px rgba(0, 0, 0, 0.5);
+    position: fixed;
+    width: 100%;
+    z-index: 999;
 }
 
 .col-lg-auto {
@@ -95,7 +98,7 @@ td {
 
 .total {
     color: #171717;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
 }
 
@@ -145,7 +148,13 @@ td {
 #lista {
     margin-top: 5%;
     margin-bottom: 3%;
-  }
+}
+
+.finalizadora {
+    display: grid;
+    grid-template-columns: auto, auto;
+    width: 100%;
+}
 
 .itens {
     display: flex;
@@ -155,7 +164,7 @@ td {
     justify-content: space-between;
 }
 
-.itens p{
+.itens p {
     width: 50%;
     font-size: 14px;
     font-weight: 700;
@@ -242,7 +251,7 @@ td {
     width: 70%;
     text-align: left;
     display: grid;
-    line-height: 35px;
+    line-height: 22px;
     text-transform: uppercase;
     color: #979797;
     font-size: 14px;
@@ -252,13 +261,27 @@ td {
     width: 30%;
     text-align: right;
     display: grid;
-    line-height: 35px;
+    line-height: 22px;
     color: #979797;
     font-weight: 700;
     font-size: 14px;
 }
 
-.ingressos {
+#forma {
+    background-color: transparent;
+    border-radius: 10px;
+    border: 1px solid #dfdfdf;
+    font-family: 'Aria', sans-serif;
+    color: #979797;
+    font-size: 15px;
+    height: 39px;
+    width: 100%;
+    padding: 5px;
+    font-weight: 400;
+    margin: 3% 0 3% 0;
+}
+
+X .ingressos {
     display: inline-flex;
     justify-content: space-between;
     align-content: center;

@@ -51,9 +51,10 @@ foreach ($ingressos['dados'] as $retorno) {
                         encode: true,
                         success: function(res){
                             console.log(res);
+                            capturaVendasAberta();
                         }
                     }).done(function(res) {
-                        console.log(data);
+                        capturaVendasAberta();
                     })
                 })
                 </script>";
@@ -62,7 +63,7 @@ foreach ($ingressos['dados'] as $retorno) {
 
 ?>
 <div class="content">
-    <section style="width: 100%; padding: 2%;">
+    <section style="width: 100%; padding: 2%;height: 100vh;margin-top: 20%;"">
         <div id="Home" class="tabcontent">
             <div class="line first">
                 <div class="blocos corpo2">
@@ -76,14 +77,28 @@ foreach ($ingressos['dados'] as $retorno) {
                     <h1 style="text-align: center; font-size: 3.5rem;"></h1>
                     <div id="lista">
                     </div>
+                    <hr>
+                    <div class="finalizadora">
+                    <form action="recebe-venda.php" method="post">
+                        <select name="forma" id="forma">
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="Credito">Crédito</option>
+                            <option value="Debito">Débito</option>
+                            <option value="Pix">Pix</option>
+                        </select>
+                        <input type="text" name="receber" id="receber" class="quantidade" placeholder="0.00" style="width: 100%;">
+                        <button type='submit' id='adicionar'>CONTINUAR</button>
+                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     <script>
-
         setInterval(capturaVendasAberta, 500);
         jQuery('.disabled').prop('disabled', true);
+
+        $("#receber").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
 
         function inpNum(e) {
             e = e || window.event;
@@ -95,12 +110,12 @@ foreach ($ingressos['dados'] as $retorno) {
 
         function capturaVendasAberta() {
             $.ajax({
-                type: "GET",
-                url: "venda-aberta.php",
-                dataType: "html",
+                type: 'GET',
+                url: 'venda-aberta.php',
+                dataType: 'html',
                 success(response) {
                     console.log(response)
-                    $("#lista").html(response);
+                    $('#lista').html(response);
                 }
             })
         }

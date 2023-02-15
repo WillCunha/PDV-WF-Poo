@@ -3,6 +3,10 @@
 $resultado = "";
 foreach ($ingressos['dados'] as $retorno) {
 
+    //Verifica se há venda aberta - se houver, desabilita o botão de "Adicionar", caso contrário, o habilita.
+    $ternaria = ($vendaAberta > 0) ? "<button type='submit' class='disabled' id='adicionar'>Adicionar</button>" : "<button type='submit' id='adicionar' class='adicionar'>Adicionar</button>";
+
+    //Verifica se a quantidade de ingressos disponíveis forem = 0. Caso seja, marca o ingresso como esgotado e desabilita o botão "Adicionar".
     if ($retorno['quantidade'] === '0') {
         $resultado .= "<div class='container card'>
         <div class='exibe-ingressos'>
@@ -29,7 +33,7 @@ foreach ($ingressos['dados'] as $retorno) {
                             <input type='text' name='nome_ingresso' id='nome_ingresso" . $retorno['id'] . "' value='" . $retorno['nome_ingresso'] . "' onkeypress='inpNum(event)' hidden>
                             <input type='number' name='valor' id='valor" . $retorno['id'] . "' value='" . $retorno['valor'] . "' onkeypress='inpNum(event)' hidden>
                             <input type='number' name='quantidade' class='quantidade' id='quantidade" . $retorno['id'] . "' value='1' onkeypress='inpNum(event)'>
-                            <button type='submit' id='adicionar'>Adicionar</button>
+                           " . $ternaria . "
                         </form>
                     </div>
                 </div>
@@ -63,32 +67,40 @@ foreach ($ingressos['dados'] as $retorno) {
 
 ?>
 <div class="content">
-    <section style="width: 100%; padding: 2%;height: 100vh;margin-top: 20%;"">
-        <div id="Home" class="tabcontent">
+    <section style="width: 100%; padding: 2%;height: 100vh;margin-top: 20%;">
+        <div id=" Home" class="tabcontent">
             <div class="line first">
                 <div class="blocos corpo2">
 
                     <?= $resultado; ?>
 
+                    <div class="b-100" style="display: none;">
+                        <h4>Dados do(s) Ingresso(s):</h4>
+
+                        <div id="impressao"></div>
+
+                    </div>
                 </div>
                 <div class="blocos corpo1">
                     <h4>FINALIZADORA:</h4>
                     <p></p>
                     <h1 style="text-align: center; font-size: 3.5rem;"></h1>
-                    <div id="lista">
-                    </div>
+
+                    <div id="lista"></div>
+
                     <hr>
                     <div class="finalizadora">
-                    <form action="recebe-venda.php" method="post">
-                        <select name="forma" id="forma">
-                            <option value="Dinheiro">Dinheiro</option>
-                            <option value="Credito">Crédito</option>
-                            <option value="Debito">Débito</option>
-                            <option value="Pix">Pix</option>
-                        </select>
-                        <input type="text" name="receber" id="receber" class="quantidade" placeholder="0.00" style="width: 100%;">
-                        <button type='submit' id='adicionar'>CONTINUAR</button>
-                    </form>
+                        <form action="recebe-venda.php" method="post" id='recebe-venda'>
+                            <input type="hidden" id="areceber" name="areceber" value="0">
+                            <select name="metodo" id="metodo">
+                                <option value="dinheiro">Dinheiro</option>
+                                <option value="credito">Crédito</option>
+                                <option value="debito">Débito</option>
+                                <option value="pix">Pix</option>
+                            </select>
+                            <input type="text" name="valor" id="valor" class="quantidade" placeholder="0.00" style="width: 100%;">
+                            <button type='submit' id='recebe-venda'>CONTINUAR</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -98,7 +110,12 @@ foreach ($ingressos['dados'] as $retorno) {
         setInterval(capturaVendasAberta, 500);
         jQuery('.disabled').prop('disabled', true);
 
-        $("#receber").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+        $("#valor").maskMoney({
+            showSymbol: true,
+            symbol: "R$",
+            decimal: ".",
+            thousands: "."
+        });
 
         function inpNum(e) {
             e = e || window.event;
@@ -114,9 +131,46 @@ foreach ($ingressos['dados'] as $retorno) {
                 url: 'venda-aberta.php',
                 dataType: 'html',
                 success(response) {
-                    console.log(response)
                     $('#lista').html(response);
                 }
             })
         }
+
+        $('#recebe-venda').submit(function(e) {
+            e.preventDefault();
+            var formData = {
+                metodo: $('#metodo').val(),
+                valor: $('#valor').val(),
+            };
+            $('.adicionar').addClass('disabled');
+            $('.adicionar').removeClass('adicionar');
+            $('#recebe-venda').trigger('reset');
+            jQuery('.disabled').prop('disabled', true);
+            console.log(formData);
+            $.ajax({
+                type: 'POST',
+                url: 'recebe-venda.php',
+                data: formData,
+                dataType: 'json',
+                encode: true,
+                success: function(res) {
+                    if (res.status == 200) {
+                        console.log(res);
+                    } else if (res.status == 400) {
+                        $('.container').css('display', 'none');
+                        $('.corpo2').css('display', 'block');
+                        $('.b-100').css('display', 'block');
+                        $.ajax({
+                            type: 'GET',
+                            url: 'gera-ingresso.php',
+                            dataType: 'html',
+                            success(response) {
+                                $('#impressao').html(response);
+                            }
+                        })
+                    }
+                }
+            });
+        })
+    </script>
     </script>

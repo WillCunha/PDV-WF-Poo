@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Entity;
 
 use App\DB\database;
 use PDO;
 
-class Venda{
+class Pedido
+{
 
     /**
      * Pega o ID da venda
@@ -39,11 +41,12 @@ class Venda{
     /**
      * Função que registra a venda desde sua abertura até seu fechamento
      */
-    public function abrevenda(){
+    public function abrevenda()
+    {
 
         $this->valor_total = $this->valor * $this->quantidade;
 
-        $obVenda = new Database("vendas");
+        $obVenda = new Database("pedido");
         $this->id = $obVenda->insert([
             'ingresso_id' => $this->ingresso_id,
             'nome_ingresso'  => $this->nome_ingresso,
@@ -55,12 +58,34 @@ class Venda{
         ]);
 
         return;
-
     }
 
-    static public function buscaVendaAberta(){
-        return(new Database('vendas'))->select("status = 'aberto'")
-                                        ->fetchAll(PDO::FETCH_CLASS,self::class);
+    /**
+     * Pega todos os pedidos abertos e os fecha
+     */
+    public function atualizaRegistro()
+    {
+        return (new Database('pedido'))->update('id = ' . $this->id, [
+            'status' => 'pendente',
+        ]);
+    }
+
+    /**
+     * Pega todas as vendas aberta
+    */
+    static public function buscaVendaAberta()
+    {
+        return (new Database('pedido'))->select("status = 'aberto'")
+            ->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+
+    /**
+     * Pega todas as vendas pendentes para coloca-las para impressão
+    */
+    static public function buscaVendaPendente()
+    {
+        return (new Database('pedido'))->select("status = 'pendente'")
+            ->fetchAll(PDO::FETCH_CLASS, self::class);
     }
 
     /**
@@ -69,7 +94,7 @@ class Venda{
     static public function getTotalIngressos()
     {
         $aberto = "'aberto'";
-        return (new Database('vendas'))->selectSum('status = ' . $aberto, 'quantidade')
+        return (new Database('pedido'))->selectSum('status = ' . $aberto, 'quantidade')
             ->fetchColumn();
     }
 
@@ -79,8 +104,7 @@ class Venda{
     static public function getTotal()
     {
         $aberto = "'aberto'";
-        return (new Database('vendas'))->selectSum('status = ' . $aberto, 'vlr_total')
+        return (new Database('pedido'))->selectSum('status = ' . $aberto, 'vlr_total')
             ->fetchColumn();
     }
-
 }

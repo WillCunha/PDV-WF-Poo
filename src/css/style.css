@@ -267,7 +267,7 @@ td {
     font-size: 14px;
 }
 
-#forma {
+#metodo {
     background-color: transparent;
     border-radius: 10px;
     border: 1px solid #dfdfdf;
@@ -281,7 +281,7 @@ td {
     margin: 3% 0 3% 0;
 }
 
-X .ingressos {
+.ingressos {
     display: inline-flex;
     justify-content: space-between;
     align-content: center;
@@ -631,6 +631,75 @@ a img {
     text-align: center;
     width: 100%;
 }
+
+/*
+*Conteúdo do Ingresso
+*/
+
+.ingressoCorpo {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.fa {
+    width: 34px;
+    color: #000;
+}
+
+.linha {
+    display: inline-flex;
+    align-items: center;
+}
+
+#headerIngresso {
+    background: #8AD6EE;
+    padding: 2%;
+    border-radius: 10px;
+}
+#headerIngresso p {
+    color: #073966;
+    font-weight: 700;
+}
+
+.headerDetalhes {
+    padding-top: 0;
+    display: inline-flex;
+    height: 100px;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#midIngresso {
+    display: inline-flex;
+    width: 100%;
+}
+
+.dadosIngresso, .dadosParticipante {
+    width: 30%;
+    padding: 0 2% 0 2%;
+    border-radius: 10px;
+    border: 10px solid #D8D8D8;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 200px;
+}
+
+.dadosParticipante{
+    width: 70%;
+}
+
+.dadosParticipante h3 {
+    font-weight: 600;
+}
+
+.dadosParticipante h2 {
+    text-transform: UPPERCASE;
+}
+.dadosIngresso h3 {
+    font-weight: 600;
+}
+
 
 @media (min-width: 576px) {
 

@@ -3,7 +3,7 @@
         'name' => 'wf/pdv',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'a6c83363b6dc4ccf28d5279383910e0f2a451497',
+        'reference' => 'c5ec1078b5fb8af9a83a94be3b626aee167419dc',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -31,7 +31,7 @@
         'wf/pdv' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'a6c83363b6dc4ccf28d5279383910e0f2a451497',
+            'reference' => 'c5ec1078b5fb8af9a83a94be3b626aee167419dc',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

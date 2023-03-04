@@ -115,6 +115,7 @@ td {
     align-items: center;
     justify-content: space-around;
     flex-direction: column;
+    padding: 7%;
 }
 
 
@@ -656,6 +657,7 @@ a img {
     padding: 2%;
     border-radius: 10px;
 }
+
 #headerIngresso p {
     color: #073966;
     font-weight: 700;
@@ -674,8 +676,15 @@ a img {
     width: 100%;
 }
 
-.dadosIngresso, .dadosParticipante {
-    width: 30%;
+#obs{
+    display: block;
+    width: 100%;
+    padding: 0 2% 0 2%;
+}
+
+.dadosParticipante,
+.dadosQR,
+.dadosIngresso {
     padding: 0 2% 0 2%;
     border-radius: 10px;
     border: 10px solid #D8D8D8;
@@ -685,8 +694,14 @@ a img {
     height: 200px;
 }
 
-.dadosParticipante{
-    width: 70%;
+.dadosQR {
+    width: 30%;
+    align-content: center;
+    align-items: center;
+}
+
+.dadosParticipante {
+    width: 100%;
 }
 
 .dadosParticipante h3 {
@@ -696,7 +711,19 @@ a img {
 .dadosParticipante h2 {
     text-transform: UPPERCASE;
 }
+.dadosIngresso {
+    width: 70%;
+}
+
 .dadosIngresso h3 {
+    font-weight: 600;
+}
+
+.dadosIngresso h2 {
+    text-transform: UPPERCASE;
+}
+
+.dadosQR h3 {
     font-weight: 600;
 }
 

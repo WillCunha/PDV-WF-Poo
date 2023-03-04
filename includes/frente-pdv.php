@@ -4,7 +4,7 @@ $resultado = "";
 foreach ($ingressos['dados'] as $retorno) {
 
     //Verifica se há venda aberta - se houver, desabilita o botão de "Adicionar", caso contrário, o habilita.
-    $ternaria = ($vendaAberta > 0) ? "<button type='submit' class='disabled' id='adicionar'>Adicionar</button>" : "<button type='submit' id='adicionar' class='adicionar'>Adicionar</button>";
+    $ternaria = ($vendaAberta > 0) ? "<button type='submit' class='disabled' id='adicionar'>Adicionar</button>" : "<button type='submit' id='adicionar' class='adicionar btn-venda'>Adicionar</button>";
 
     //Verifica se a quantidade de ingressos disponíveis forem = 0. Caso seja, marca o ingresso como esgotado e desabilita o botão "Adicionar".
     if ($retorno['quantidade'] === '0') {
@@ -125,6 +125,7 @@ foreach ($ingressos['dados'] as $retorno) {
                 e.preventDefault();
         }
 
+
         function capturaVendasAberta() {
             $.ajax({
                 type: 'GET',
@@ -142,8 +143,8 @@ foreach ($ingressos['dados'] as $retorno) {
                 metodo: $('#metodo').val(),
                 valor: $('#valor').val(),
             };
-            $('.adicionar').addClass('disabled');
-            $('.adicionar').removeClass('adicionar');
+            $('.btn-venda').addClass('disabled');
+            $('.btn-venda').removeClass('adicionar');
             $('#recebe-venda').trigger('reset');
             jQuery('.disabled').prop('disabled', true);
             console.log(formData);
@@ -157,17 +158,12 @@ foreach ($ingressos['dados'] as $retorno) {
                     if (res.status == 200) {
                         console.log(res);
                     } else if (res.status == 400) {
-                        $('.container').css('display', 'none');
-                        $('.corpo2').css('display', 'block');
-                        $('.b-100').css('display', 'block');
-                        $.ajax({
-                            type: 'GET',
-                            url: 'gera-ingresso.php',
-                            dataType: 'html',
-                            success(response) {
-                                $('#impressao').html(response);
-                            }
-                        })
+                        $('.btn-venda').addClass('adicionar');
+                        $('.btn-venda').removeClass('disabled');
+                        jQuery('.btn-venda').prop('disabled', false);
+                        let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+width=600,height=600,left=100,top=100`;
+                        open('gera-ingresso.php', 'test', params);
                     }
                 }
             });

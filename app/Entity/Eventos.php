@@ -2,40 +2,56 @@
 
 namespace App\Entity;
 
-class Eventos{
+class Eventos
+{
 
-    /**
-     * ID do evento
-     * @var string id
-     */
+      /**
+       * ID do evento
+       * @var string id
+       */
       public $id;
 
-    /**
-     * Nome do evento
-     * @var string titulo
-     */
+      /**
+       * Nome do evento
+       * @var string titulo
+       */
       public $titulo;
 
-     /**
-      * Data do evento
-      * @var string data
-      */
+      /**
+       * Data do evento
+       * @var string data
+       */
       public $data;
 
       /**
        * Solicita à API da WF os eventos com data atual
        */
-      static public function getEventoData(){
+      static public function getEventoData()
+      {
             date_default_timezone_set('America/Sao_Paulo');
             $data = date('d/m/Y', time());
             $ch = 'http://localhost/EmissorIngressos/api/eventos/evento-data/';
             $apiKey = $data;
+            $curl = curl_init($ch . $apiKey);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, True);
+            $return = curl_exec($curl);
+            curl_close($curl);
+            $resposta = json_decode($return, true);
+            return $resposta;
+      }
+
+      /**
+       * Solicita à API da WF o evento com id especifico
+       */
+      static public function getEventoId($id)
+      {
+            $ch = 'http://localhost/EmissorIngressos/api/eventos/evento-id/';
+            $apiKey = $id;
             $curl = curl_init($ch.$apiKey);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, True);
             $return = curl_exec($curl);
             curl_close($curl);
-            $resposta = json_decode($return, true); 
+            $resposta = json_decode($return, true);
             return $resposta;
       }
-
 }

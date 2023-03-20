@@ -9,9 +9,9 @@ if($dados['dados'] === 0){
     $data = "";
 }else{
     $erro = "";
-    $href = "frente.php?id=".$dados['dados']['id'];
+    $href = "salva_evento.php?id=".$dados['dados']['id'];
     $titulo = $dados['dados']['titulo'];
-    $data = $dados['dados']['data'];
+    $data = "Data: " .$dados['dados']['data'];
 }
 
 ?>
@@ -23,7 +23,7 @@ if($dados['dados'] === 0){
                 <h2 style="margin-bottom: 2%;"><?= $erro ?></h2>
                 <h2 style="margin-bottom: 2%;"><?= $titulo ?></h2>
             </a>
-                <h6>Data: <?= $data ?></h6>
+                <h6><?= $data ?></h6>
 
             </div>
             <a href="#" style="display: grid; justify-items: center; margin-bottom: 2%;">

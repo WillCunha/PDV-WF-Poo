@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+$id = $_SESSION['evento_id'];
 $resultado = "";
 foreach ($ingressos['dados'] as $retorno) {
 
@@ -31,6 +32,7 @@ foreach ($ingressos['dados'] as $retorno) {
                         <form action='envia-compra.php' method='post' id='envia-compra" . $retorno['id'] . "'>
                             <input type='number' name='id' id='id" . $retorno['id'] . "' value='" . $retorno['id'] . "' onkeypress='inpNum(event)' hidden>
                             <input type='text' name='nome_ingresso' id='nome_ingresso" . $retorno['id'] . "' value='" . $retorno['nome_ingresso'] . "' onkeypress='inpNum(event)' hidden>
+                            <input type='text' name='id_ingresso' id='id_ingresso" . $retorno['id'] . "' value='" . $retorno['id_ingresso'] . "' onkeypress='inpNum(event)' hidden>
                             <input type='number' name='valor' id='valor" . $retorno['id'] . "' value='" . $retorno['valor'] . "' onkeypress='inpNum(event)' hidden>
                             <input type='number' name='quantidade' class='quantidade' id='quantidade" . $retorno['id'] . "' value='1' onkeypress='inpNum(event)'>
                            " . $ternaria . "
@@ -43,6 +45,7 @@ foreach ($ingressos['dados'] as $retorno) {
                     var formData = {
                         id: $('#id" . $retorno['id'] . "').val(),
                         nome_ingresso: $('#nome_ingresso" . $retorno['id'] . "').val(),
+                        id_ingresso: $('#id_ingresso" . $retorno['id'] . "').val(),
                         quantidade: $('#quantidade" . $retorno['id'] . "').val(),
                         valor: $('#valor" . $retorno['id'] . "').val()
                     };
@@ -155,15 +158,17 @@ foreach ($ingressos['dados'] as $retorno) {
                 dataType: 'json',
                 encode: true,
                 success: function(res) {
+                    console.log(res);
+                    console.log("Sucesso!")
                     if (res.status == 200) {
-                        console.log(res);
+                        console.log("seila")
                     } else if (res.status == 400) {
                         $('.btn-venda').addClass('adicionar');
                         $('.btn-venda').removeClass('disabled');
                         jQuery('.btn-venda').prop('disabled', false);
                         let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
 width=600,height=600,left=100,top=100`;
-                        open('gera-ingresso.php', 'test', params);
+                        open('gera-ingresso.php?id=<?= $id?>', 'test', params);
                     }
                 }
             });
